@@ -199,19 +199,37 @@
         }
 
         // --- 录制与日志工具函数 ---
+        // --- 录制与日志工具函数 (修复版) ---
         function startRecord() {
             isRecording = true;
             recordedData = [];
-            document.getElementById('btn-start').style.display='none';
-            document.getElementById('btn-stop').style.display='block';
+            
+            // 1. 隐藏开始按钮
+            document.getElementById('btn-start').style.display = 'none';
+            
+            // 2. 显示并激活停止按钮 (关键修复：加上 classList.add('active'))
+            const btnStop = document.getElementById('btn-stop');
+            btnStop.style.display = 'block';
+            btnStop.classList.add('active'); 
+            
+            // 3. 禁用下载按钮
             document.getElementById('btn-csv').classList.remove('active');
+            
             addLog("⏺ 开始录制数据...", 3);
         }
+
         function stopRecord() {
             isRecording = false;
-            document.getElementById('btn-start').style.display='block';
-            document.getElementById('btn-stop').style.display='none';
+            
+            // 1. 显示开始按钮
+            document.getElementById('btn-start').style.display = 'block';
+            
+            // 2. 隐藏停止按钮
+            document.getElementById('btn-stop').style.display = 'none';
+            
+            // 3. 激活下载按钮
             document.getElementById('btn-csv').classList.add('active');
+            
             addLog(`⏹ 录制结束，共 ${recordedData.length} 条`, 3);
         }
         function downloadCSV() {
@@ -246,5 +264,6 @@
     </script>
 </body>
 </html>
+
 
 
